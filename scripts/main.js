@@ -10,8 +10,10 @@ addItemButton.onclick = function() {
 // Stop the form from submitting when a button is pressed
 addItemButton.addEventListener('submit', function(e) {
   e.preventDefault();
+  localStorage.setItem('name', addItemButton.value);
+  addItemButton.value = '';
 });
 
 addItemButton.addEventListener('click', function() {
-  localStorage.setItem('name', addItemButton.value);
+
 })
