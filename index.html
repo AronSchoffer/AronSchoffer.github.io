@@ -4,6 +4,9 @@
   <meta charset="utf-8" />
   <title>gps test</title>
   
+  <link rel='stylesheet' href='css/main.css'/>
+  <link rel='stylesheet' href='css/map.css'/>
+  <link rel='stylesheet' href='css/logger.css'/>
   <!-- include leaflet css and javascript -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -15,21 +18,27 @@
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  
-  <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-    html, body, #mapid {
-      height: 100%;
-      width: 100vw;
-    }
-  </style>
 </head>
 
 <body>
   <div id="mapid"></div>
-  <script src="./main.js"></script>
+  <script type='module' src="./main.js"></script>
+  <div id="logger-container">
+    <div id="logger-buttons">
+      <button type='button' onclick=""> start tracking </button>
+      <button id='but' class='log-point-button' type='button'> log oost </button>
+      <button class='log-point-button' type='button'> log O-hoek </button>
+      <button class='log-point-button' type='button'> log N-hoek </button>
+      <button class='log-point-button' type='button'> log noord </button>
+    </div>
+    <div id="logger-feedback">
+      <p>log something</p>
+    </div>
+  </div>
+  <script>
+  function logPoint() {
+    console.log(this);
+  }
+  </script>
 </body>
 </html>
