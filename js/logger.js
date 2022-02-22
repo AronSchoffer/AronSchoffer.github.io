@@ -72,6 +72,7 @@ function onLocFoundHA(e) {
   var gjson = e.target.curGJson.features[1];
   logLocEvent(e, gjson);
   console.log(e.target.curGJson);
+  console.log(Date.now());
 }
 
 export {
