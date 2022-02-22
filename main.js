@@ -31,15 +31,15 @@ mymap.locate({setView: true, maxZoom: 16, enableHighAccuracy: true});
 ////////////////////////////////////////////////////////////////////////////////
 function main() {
   var logger = document.getElementById('logger-container');
-  mymap.curGJson = log.getEmptyGJson();
   
   //set event listeners for buttons that log single point
   var pButtons = logger.getElementsByClassName('log-point-button');
   for (var but of pButtons) {
     but.onclick = (e) => {
+      mymap.curGJson = log.getEmptyGJson();
       mymap.once('locationfound', log.onLocFound);
-      mymap.curGJson.features[0].properties.name = e.target.innerHTML.trim();
-      mymap.curGJson.features[1].properties.name = "HA " + e.target.innerHTML.trim();
+      mymap.curGJson.features[0].properties.name = e.target.value.trim();
+      mymap.curGJson.features[1].properties.name = "HA " + e.target.value.trim();
       //logId was set using devtools
       var id = localStorage.getItem('logId');
       mymap.curGJson.features[0].properties.id = id;

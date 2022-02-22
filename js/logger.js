@@ -69,12 +69,19 @@ function onLocFound(e) {
 
 function onLocFoundHA(e) {
   gen.onLocationFound(e);
-  var gjson = e.target.curGJson.features[1];
-  logLocEvent(e, gjson);
-  console.log(e.target.curGJson);
-  var newId = gjson.properties.id;
-  newId++;
-  localStorage.setItem('logId', newId);
+  var gjson = e.target.curGJson.features[0];
+  var gjsonHA = e.target.curGJson.features[1];
+  logLocEvent(e, gjsonHA);
+
+  //download the geojson
+  var id = gjson.properties.id;
+  var exportName = id + '_' + gjson.properties.name;
+  gen.downloadObjectAsJson(e.target.curGJson, exportName);
+  
+  //prepare for next log
+  id++;
+  localStorage.setItem('logId', id);
+  delete e.target.curGJson;
 }
 
 export {
