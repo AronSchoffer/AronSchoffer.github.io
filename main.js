@@ -40,7 +40,11 @@ function main() {
       mymap.once('locationfound', log.onLocFound);
       mymap.curGJson.features[0].properties.name = e.target.innerHTML.trim();
       mymap.curGJson.features[1].properties.name = "HA " + e.target.innerHTML.trim();
+      //logId was set using devtools
+      var id = localStorage.getItem('logId');
+      mymap.curGJson.features[0].properties.id = id;
+      mymap.curGJson.features[1].properties.id = id;
       mymap.locate({setView: true, maxZoom: 16, enableHighAccuracy: false});
     }
-  }  
+  }
 }
