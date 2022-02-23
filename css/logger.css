@@ -3,7 +3,7 @@ p.logger {
 }
 
 #logger-container {
-  height: 10%;
+  height: 20%;
   width: 100%;
   background-color: #e0e0e0;
   display: flex;
@@ -12,12 +12,14 @@ p.logger {
 
 #logger-buttons {
   display: flex;
+  flex-wrap: wrap;
 }
 
 #logger-buttons > button {
   margin: 5px;
-  height: 5vh;
-  width: 100%;
+  height: 6vh;
+  width: 11vh;
+  text-align: center;
 }
 
 #logger-feedback {
