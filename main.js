@@ -32,10 +32,13 @@ mymap.locate({setView: true, maxZoom: 16, enableHighAccuracy: true});
 function main() {
   var logger = document.getElementById('logger-container');
   
-  //set event listeners for buttons that log single point
+  //set event listeners for buttons that log a single point
   var pButtons = logger.getElementsByClassName('log-point-button');
   for (var but of pButtons) {
     but.onclick = (e) => {
+      if (!e.target.hasAttribute('value')) {
+        e.target.value = prompt('Naam meetpunt:');
+      }
       mymap.curGJson = log.getEmptyGJson();
       mymap.once('locationfound', log.onLocFound);
       mymap.curGJson.features[0].properties.name = e.target.value.trim();
