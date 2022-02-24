@@ -36,13 +36,15 @@ function main() {
   var pButtons = logger.getElementsByClassName('log-point-button');
   for (var but of pButtons) {
     but.onclick = (e) => {
-      if (!e.target.hasAttribute('value')) {
-        e.target.value = prompt('Naam meetpunt:');
+      if (e.target.id === 'other-button') {
+        var name = prompt('Naam meetpunt:');
+      } else {
+        var name = e.target.value.trim();
       }
       mymap.curGJson = log.getEmptyGJson();
       mymap.once('locationfound', log.onLocFound);
-      mymap.curGJson.features[0].properties.name = e.target.value.trim();
-      mymap.curGJson.features[1].properties.name = "HA " + e.target.value.trim();
+      mymap.curGJson.features[0].properties.name = name;
+      mymap.curGJson.features[1].properties.name = "HA " + name;
       //logId was set using devtools
       var id = localStorage.getItem('logId');
       mymap.curGJson.features[0].properties.id = id;

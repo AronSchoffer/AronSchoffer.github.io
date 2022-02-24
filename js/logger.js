@@ -63,6 +63,13 @@ function onLocFound(e) {
   logLocEvent(e, gjson)
 
   //e.target == mymap
+  var circle = L.circle(e.latlng, {
+    color: 'red',
+    fillColor: 'red',
+    fillOpacity: 1,
+    radius: 2
+  }).addTo(e.target);
+  
   e.target.once('locationfound', onLocFoundHA);
   e.target.locate({setView: true, maxZoom: 16, enableHighAccuracy: true});
 }
@@ -79,8 +86,10 @@ function onLocFoundHA(e) {
   gen.downloadObjectAsJson(e.target.curGJson, exportName);
   
   //prepare for next log
-  id++;
-  localStorage.setItem('logId', id);
+  if (gjson.properties.name == '' || null) {
+    id++;
+    localStorage.setItem('logId', id);  
+  }
   delete e.target.curGJson;
 }
 
