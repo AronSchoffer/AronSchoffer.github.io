@@ -117,7 +117,7 @@ function onLocFoundHA(e) {
   gen.downloadObjectAsJson(e.target.curGJson, exportName);
   
   //prepare for next log
-  if (gjson.properties.name == '' || null) {
+  if (gjson.properties.name != '' || null) {
     id++;
     localStorage.setItem('logId', id);  
   }
