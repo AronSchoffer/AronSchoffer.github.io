@@ -128,7 +128,7 @@ function startTrack(e) {
   if (m.map.hasLayer(m.map.track)) m.map.removeLayer(m.map.track);
   m.map.track = L.polyline([], {color: 'red'}).addTo(m.map);
   m.map.on('locationfound', trackEpoch);
-  m.map.locate({setView: true, maxZoom: 16, enableHighAccuracy: true, watch: true});
+  m.map.locate({enableHighAccuracy: true, watch: true});
   e.target.innerHTML = 'stop tracking';
   e.target.onclick = stopTrack;
 }
