@@ -36,22 +36,6 @@
 //   return window.location.protocol + '//' + window.location.host;
 // }
 
-function onLocationFound(e) {
-  var radius = e.accuracy;
-  L.marker(e.latlng).addTo(e.target)
-      .bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-  L.circle(e.latlng, radius).addTo(e.target);
-}
-
-function onLocationError(e) {
-    alert(e.message);
-}
-
-function toLnglat(latlng) {
-  return Object.values(latlng).reverse();
-}
-
 //from: https://stackoverflow.com/questions/19721439/download-json-object-as-a-file-from-browser
 function downloadObjectAsJson(exportObj, exportName){
   var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
@@ -64,8 +48,5 @@ function downloadObjectAsJson(exportObj, exportName){
 }
 
 export{
-  onLocationFound,
-  onLocationError,
-  toLnglat,
   downloadObjectAsJson
 };
