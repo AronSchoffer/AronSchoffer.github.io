@@ -31,6 +31,10 @@ function setTrackButton() {
   trackButton.onclick = startTrack;
 }
 
+function feedback(message) {
+  document.getElementById('logger-feedback').innerHTML = message;
+}
+
 //creates geojson for the data we'd like to collect
 //we try to get all data from the locationevent
 //see: https://leafletjs.com/reference.html#locationevent
@@ -95,7 +99,7 @@ function onLocFound(e) {
 
   //e.target == m.map
   var circle = L.circle(e.latlng, {
-    color: 'red',
+    color: 'black',
     fillColor: 'red',
     fillOpacity: 1,
     radius: 2
@@ -128,14 +132,12 @@ function startTrack(e) {
   if (m.map.hasLayer(m.map.track)) m.map.removeLayer(m.map.track);
   m.map.track = L.polyline([], {color: 'red'}).addTo(m.map);
   m.map.on('locationfound', trackEpoch);
-  m.map.locate({enableHighAccuracy: true, watch: true});
   e.target.innerHTML = 'stop tracking';
   e.target.onclick = stopTrack;
 }
 
 function stopTrack(e) {
   m.map.off('locationfound', trackEpoch);
-  m.map.stopLocate();
   e.target.innerHTML = 'start tracking';
   e.target.onclick = startTrack;
 }
@@ -151,5 +153,6 @@ export {
   setLogPointButtons,
   setTrackButton,
   getEmptyGJson,
-  onLocFound
+  onLocFound,
+  feedback
 }

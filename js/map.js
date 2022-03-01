@@ -1,6 +1,10 @@
 import * as gen from './general.js';
 
 var map;
+var posCircle;
+var posAccuracy;
+const locDoneEvent = new Event('locDone');
+var el;
 
 function init() {
   var achtergrondkaart = L.tileLayer(  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
@@ -17,19 +21,33 @@ function init() {
     zoomOffset: -1,
     zoomSnap: 0.25,
     layers: [achtergrondkaart]
-  }).setView([51.798958, 5.842759],13);
+  });
+  
+  posCircle = L.circle([0,0], {
+    radius: 2,
+    fillColor: '#3388ff',
+    fillOpacity: 1
+  }).addTo(map);
+  posAccuracy = L.circle(posCircle.getLatLng(), {
+    radius: 0
+  }).addTo(map);
+  
+  el = document.getElementById('mapid');
 }
 
-function onLocationFound(e) {
-  var radius = e.accuracy;
-  L.marker(e.latlng).addTo(e.target)
-      .bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-  L.circle(e.latlng, radius).addTo(e.target);
+function onLocFound(e) {
+  posCircle.setLatLng(e.latlng);
+  posAccuracy.setLatLng(e.latlng);
+  posAccuracy.setRadius(e.accuracy);
+  el.dispatchEvent(locDoneEvent);
 }
 
-function onLocationError(e) {
+function onLocError(e) {
     alert(e.message);
+}
+
+function onLocDone(e) {
+  map.locate({setView: false, enableHighAccuracy: true, watch: true});
 }
 
 function toLnglat(latlng) {
@@ -37,9 +55,11 @@ function toLnglat(latlng) {
 }
 
 export {
-  onLocationFound,
-  onLocationError,
+  onLocFound,
+  onLocError,
   toLnglat,
   init,
-  map
+  map,
+  el,
+  onLocDone
 }
