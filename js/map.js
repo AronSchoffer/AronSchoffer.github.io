@@ -3,8 +3,6 @@ import * as gen from './general.js';
 var map;
 var posCircle;
 var posAccuracy;
-const locDoneEvent = new Event('locDone');
-var el;
 
 function init() {
   var achtergrondkaart = L.tileLayer(  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
@@ -22,32 +20,30 @@ function init() {
     zoomSnap: 0.25,
     layers: [achtergrondkaart]
   });
-  
-  posCircle = L.circle([0,0], {
+}
+
+function onFirstFound(e) {
+  posCircle = L.circle(e.latlng, {
     radius: 2,
     fillColor: '#3388ff',
     fillOpacity: 1
   }).addTo(map);
-  posAccuracy = L.circle(posCircle.getLatLng(), {
-    radius: 0
-  }).addTo(map);
-  
-  el = document.getElementById('mapid');
+  posAccuracy = L.circle(e.latlng, {
+    radius: e.accuracy
+  }).addTo(map);  
+  map.on('locationfound', onLocFound);
+  map.off('locationerror', onLocError);
+  map.locate({setView: false, enableHighAccuracy: true, watch: true});
 }
 
 function onLocFound(e) {
   posCircle.setLatLng(e.latlng);
   posAccuracy.setLatLng(e.latlng);
   posAccuracy.setRadius(e.accuracy);
-  el.dispatchEvent(locDoneEvent);
 }
 
 function onLocError(e) {
     alert(e.message);
-}
-
-function onLocDone(e) {
-  map.locate({setView: false, enableHighAccuracy: true, watch: true});
 }
 
 function toLnglat(latlng) {
@@ -55,11 +51,10 @@ function toLnglat(latlng) {
 }
 
 export {
+  onFirstFound,
   onLocFound,
   onLocError,
   toLnglat,
   init,
-  map,
-  el,
-  onLocDone
+  map
 }

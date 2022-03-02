@@ -15,12 +15,14 @@ function setLogPointButtons() {
       }
       m.map.curGJson = getEmptyGJson();
       m.map.once('locationfound', onLocFound);
+      console.log(m.map);
       m.map.curGJson.features[0].properties.name = name;
       m.map.curGJson.features[1].properties.name = "HA " + name;
       //logId was set using devtools
       var id = localStorage.getItem('logId');
       m.map.curGJson.features[0].properties.id = id;
       m.map.curGJson.features[1].properties.id = id;
+      m.map.stopLocate();
       m.map.locate({setView: true, maxZoom: 16, enableHighAccuracy: false});
     }
   }  
@@ -93,7 +95,6 @@ function logLocEvent(e, gjson) {
 
 //log the found location and locate again with high accuracy enabled
 function onLocFound(e) {
-  m.onLocationFound(e);
   var gjson = e.target.curGJson.features[0];
   logLocEvent(e, gjson)
 
@@ -102,7 +103,8 @@ function onLocFound(e) {
     color: 'black',
     fillColor: 'red',
     fillOpacity: 1,
-    radius: 2
+    radius: 1.5,
+    weight: 1
   }).addTo(e.target);
   
   e.target.once('locationfound', onLocFoundHA);
@@ -110,7 +112,6 @@ function onLocFound(e) {
 }
 
 function onLocFoundHA(e) {
-  m.onLocationFound(e);
   var gjson = e.target.curGJson.features[0];
   var gjsonHA = e.target.curGJson.features[1];
   logLocEvent(e, gjsonHA);
@@ -118,14 +119,21 @@ function onLocFoundHA(e) {
   //download the geojson
   var id = gjson.properties.id;
   var exportName = id + '_' + gjson.properties.name;
-  gen.downloadObjectAsJson(e.target.curGJson, exportName);
-  
-  //prepare for next log
-  if (gjson.properties.name != '' || null) {
-    id++;
-    localStorage.setItem('logId', id);  
+  if (confirm('Would you like to save ' + exportName + '?')) {
+    gen.downloadObjectAsJson(e.target.curGJson, exportName);
+    //prepare for next log
+    if (gjson.properties.name != '' || null) {
+      id++;
+      localStorage.setItem('logId', id);  
+    }
   }
   delete e.target.curGJson;
+  m.map.locate({setView: false, enableHighAccuracy: true, watch: true});
+}
+
+function saveJson(json, exportName) {
+
+
 }
 
 function startTrack(e) {

@@ -6,9 +6,8 @@ import * as log from './js/logger.js';
 m.init();
 
 //first locate
-m.map.on('locationfound', m.onLocFound);
-m.map.once('locationerror', m.onLocError);
-m.el.addEventListener('locDone', m.onLocDone);
+m.map.once('locationfound', m.onFirstFound);
+m.map.on('locationerror', m.onLocError);
 m.map.locate({setView: true, maxZoom: 16, enableHighAccuracy: true});
 
 //set button event listeners
