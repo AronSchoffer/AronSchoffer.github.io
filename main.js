@@ -13,3 +13,4 @@ m.map.locate({setView: true, maxZoom: 16, enableHighAccuracy: true});
 //set button event listeners
 log.setLogPointButtons();
 log.setTrackButton();
+log.setResetButton();

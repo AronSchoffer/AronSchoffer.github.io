@@ -33,6 +33,14 @@ function setTrackButton() {
   trackButton.onclick = startTrack;
 }
 
+function setResetButton() {
+  var resetButton = document.getElementById('reset-button');
+  resetButton.onclick = () => {
+    var logId = prompt('Reset current logId of ' + localStorage.getItem('logId') + ' to:');
+    if(logId) localStorage.setItem('logId', logId);
+  }
+}
+
 function feedback(message) {
   document.getElementById('logger-feedback').innerHTML = message;
 }
@@ -160,6 +168,7 @@ function trackEpoch(e) {
 export {
   setLogPointButtons,
   setTrackButton,
+  setResetButton,
   getEmptyGJson,
   onLocFound,
   feedback
