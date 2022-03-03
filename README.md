@@ -1,5 +1,6 @@
 ## Notes
-To build and publish to github pages run:
+To build and publish to github pages:
+Comment out '/public/build/' in .gitignore with '#' and run:
 ```bash
 npm run build
 git subtree push --prefix public/ origin gh-pages
