@@ -1,4 +1,4 @@
-<button on:click={startTrack}> start tracking </button>
+<button on:click={startTrack}> {action} </button>
 
 <script>
   import {map} from '../store.js';
@@ -9,13 +9,13 @@
     if ($map.hasLayer($map.track)) $map.removeLayer($map.track);
     $map.track = L.polyline([], {color: 'red'}).addTo($map);
     $map.on('locationfound', trackEpoch);
-    e.target.innerHTML = 'stop tracking';
+    action = 'stop tracking';
     e.target.onclick = stopTrack;
   }
 
   function stopTrack(e) {
     $map.off('locationfound', trackEpoch);
-    e.target.innerHTML = 'start tracking';
+    action = 'start tracking';
     e.target.onclick = startTrack;
   }
 

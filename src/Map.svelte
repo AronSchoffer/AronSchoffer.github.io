@@ -5,6 +5,7 @@
 
   let posCircle;
   let posAccuracy;
+  $map = null;
   
   function createMap(container) {
     let m = L.map(container, {
@@ -36,6 +37,10 @@
     };
   }
   
+  function resizeMap() {
+    if($map) { $map.invalidateSize(); }
+  }  
+  
   function onFirstFound(e) {
     posCircle = L.circle(e.latlng, {
       radius: 2,
@@ -61,4 +66,6 @@
   }
 </script>
 
-<div style="height:80vh;width:vw" use:mapAction />
+<!-- <svelte:window on:resize={resizeMap} /> -->
+
+<div style="height:80%;width:100%" use:mapAction />

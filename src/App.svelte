@@ -9,3 +9,14 @@
 	<Map/>
 	<Logger/>
 </main>
+
+<style>
+	:global(body) {
+		padding: 0;
+		margin: 0;
+	}
+	:global(html, body, main) {
+		height: 100%;
+		width: 100vw;
+	}
+</style>

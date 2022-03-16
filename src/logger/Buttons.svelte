@@ -1,6 +1,15 @@
+<div>
+  {#each buttons as but}
+    <button on:click={logPoint} name={but}> {but} </button> 
+  {/each}
+  <Track/>
+  <button on:click={reset}> reset logId </button>
+</div>
+
 <script>
   import {map} from '../store.js';
   import Track from './Track.svelte';
+  import {downloadObjectAsJson} from '../general.js'
   
   let gjson;
   let buttons = ['oost', 'O-hoek', 'N-hoek', 'noord', 'ingang', 'other button'];
@@ -53,7 +62,7 @@
     var id = gjson.properties.id;
     var exportName = id + '_' + gjson.properties.name;
     if (confirm('Would you like to save ' + exportName + '?')) {
-      gen.downloadObjectAsJson(e.target.curGJson, exportName);
+      downloadObjectAsJson(gjson, exportName);
       //prepare for next log
       if (gjson.properties.name != '' || null) {
         id++;
@@ -92,14 +101,6 @@
     if(logId) localStorage.setItem('logId', logId);
   }
 </script>
-
-<div>
-  {#each buttons as but}
-    <button on:click={logPoint} name={but}> {but} </button> 
-  {/each}
-  <Track/>
-  <button on:click={reset}> reset logId </button>
-</div>
 
 <style>
   div {
