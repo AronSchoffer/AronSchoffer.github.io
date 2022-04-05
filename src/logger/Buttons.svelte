@@ -35,7 +35,7 @@
     gjson.properties.id = id;
     $map.once('locationfound', onLocFound);
     $map.stopLocate();
-    $map.locate({setView: true, maxZoom: 13, enableHighAccuracy: false});
+    $map.locate({setView: false, enableHighAccuracy: false});
   }
   
   //creates geojson for the data we'd like to collect
