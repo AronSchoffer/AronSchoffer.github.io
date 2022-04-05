@@ -25,14 +25,17 @@
     } else {
       var name = e.target.name.trim();
     }
+    var weather = prompt('What\'s the weather like?');
     gjson = createGjson();
-    $map.once('locationfound', onLocFound);
     gjson.properties.name = name;
-    //logId was set in '../App.svelte'
+    gjson.properties.weather = weather;
+    gjson.properties.internet = window.navigator.onLine;
+    //logId was initially set in '../App.svelte'
     var id = localStorage.getItem('logId');
     gjson.properties.id = id;
+    $map.once('locationfound', onLocFound);
     $map.stopLocate();
-    $map.locate({setView: true, maxZoom: 16, enableHighAccuracy: false});
+    $map.locate({setView: true, maxZoom: 13, enableHighAccuracy: false});
   }
   
   //creates geojson for the data we'd like to collect
@@ -49,6 +52,8 @@
           altitudeAccuracy: -1,
           heading: -1,
           speed: -1,
+          weather: "no info",
+          internet: false,
           timestamp: -1
         },
         geometry: {
