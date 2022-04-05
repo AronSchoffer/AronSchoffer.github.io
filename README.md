@@ -19,3 +19,8 @@ git subtree push --prefix public/ origin gh-pages
 ```
 **Do not push gh-pages to origin gh-pages**  
 Origin gh-pages only contains the build files. It is not the same as the local gh-pages branch.
+
+Don't forget to remove uncomment in .gitignore and:
+```bash
+git checkout main
+```
